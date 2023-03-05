@@ -41,27 +41,28 @@ int main(int argc, char const *argv[]) {
     if(inet_pton(AF_INET, server_ip, &serv_addr.sin_addr)<=0) {
     printf("\nInvalid address/ Address not supported \n");
     return -1;
-}
+    }
 
-// Connecting to server
-if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-    printf("\nConnection Failed \n");
-    return -1;
-}
+    // Connecting to server
+    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        printf("\nConnection Failed \n");
+        return -1;
+    }
 
-// Sending and receiving messages from the server
-while(1) {
-    // Sending message to the server
-    count++;
-    send(sock, hello, strlen(hello), 0);
-    printf("Message %d sent\n", count);
-    
-    // Receiving message from the server
-    valread = read(sock, buffer, 1024);
-    printf("Server message: %s\n", buffer);
-    memset(buffer, 0, sizeof(buffer));
-    
-    // Sleeping for the specified interval
-    sleep(interval);
+    // Sending and receiving messages from the server
+    while(1) {
+        // Sending message to the server
+        count++;
+        send(sock, hello, strlen(hello), 0);
+        printf("Message %d sent\n", count);
+        
+        // Receiving message from the server
+        valread = read(sock, buffer, 1024);
+        printf("Server message: %s\n", buffer);
+        memset(buffer, 0, sizeof(buffer));
+        
+        // Sleeping for the specified interval
+        sleep(interval);
+    }
+    return 0;
 }
-return 0;
